@@ -5,7 +5,7 @@ from app import app
 from flask import Flask, flash, request, redirect, render_template
 from werkzeug.utils import secure_filename
 
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -30,13 +30,6 @@ def upload_file():
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 			flash('File(s) successfully uploaded')
 			return redirect('/')
-
-@app.route('/download')
-def download_file():
-	url = 'https://codeload.github.com/fogleman/Minecraft/zip/master'
-	response = urllib.request.urlopen(url)
-	data = response.read()
-	response.close()
 
 if __name__ == "__main__":
     app.run()
