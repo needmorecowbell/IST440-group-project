@@ -2,7 +2,11 @@ import os
 #import magic
 import urllib.request
 from app import app
-from flask import Flask, flash, request, redirect, render_template
+from app import login_manager
+from flask import Flask, Response, flash, request, redirect, render_template
+from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user 
+from models.user import User
+
 from werkzeug.utils import secure_filename
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
@@ -43,15 +47,42 @@ def get_reports():
     # the reports will be separated in a similar fashion to how the file upload works. 
     return render_template('reports.html', data=reports)
 
-@app.route('/login', methods=['GET', 'POST'])
+# somewhere to login
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    error = None
     if request.method == 'POST':
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            error = 'Invalid Credentials. Please try again.'
+        username = request.form['username']
+        password = request.form['password']        
+        if password == username + "_secret":
+            id = username.split('user')[1]
+            user = User(id)
+            login_user(user)
+            return redirect(request.args.get("next"))
         else:
-            return redirect(url_for('home'))
-    return render_template('login.html', error=error)
+            return abort(401)
+    else:
+        return Response('''
+        <form action="" method="post">
+            <p><input type=text name=username>
+            <p><input type=password name=password>
+            <p><input type=submit value=Login>
+        </form>
+        ''')
+
+
+# somewhere to logout
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return Response('<p>Logged out</p>')
+
+
+# handle login failed
+@app.errorhandler(401)
+def page_not_found(e):
+    return Response('<p>Login failed</p>')
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
