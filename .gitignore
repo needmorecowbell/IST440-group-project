@@ -5,6 +5,9 @@ __pychache__/
 
 reports/*.json
 env/
+env/*
+venv/*
+venv/
 
 uploads/*.png
 uploads/*.jpg
