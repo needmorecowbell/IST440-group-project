@@ -4,7 +4,7 @@ import urllib.request
 from app import app
 from app import login_manager
 from flask import Flask, Response, flash, request, redirect, render_template
-from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user 
+from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
 from models.user import User
 
 from werkzeug.utils import secure_filename
@@ -13,7 +13,7 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-	
+
 @app.route('/')
 def upload_form():
 	return render_template('upload.html')
@@ -43,8 +43,8 @@ def upload_file():
 @app.route('/reports')
 def get_reports():
     reports =  ["test report data 1","test report data 2"]
-    # eventually this will be a list of the reports that a user has requested. 
-    # the reports will be separated in a similar fashion to how the file upload works. 
+    # eventually this will be a list of the reports that a user has requested.
+    # the reports will be separated in a similar fashion to how the file upload works.
     return render_template('reports.html', data=reports)
 
 # somewhere to login
@@ -52,7 +52,7 @@ def get_reports():
 def login():
     if request.method == 'POST':
         username = request.form['username']
-        password = request.form['password']        
+        password = request.form['password']
         if password == username + "_secret":
             id = username.split('user')[1]
             user = User(id)

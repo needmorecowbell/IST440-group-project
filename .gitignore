@@ -1,0 +1,11 @@
+keys/
+
+*.pyc
+__pychache__/
+
+reports/*.json
+env/
+
+uploads/*.png
+uploads/*.jpg
+uploads/*.jpeg
