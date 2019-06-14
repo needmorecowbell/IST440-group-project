@@ -142,7 +142,7 @@ def main():
         if args.verbose:
             print("Brute forcing image text...")
 
-        results= t.brute_force(results)
+        results= t.brute_force(results, 33)
         report["brute_force"]=results
     elif args.ce:
         if args.verbose:
