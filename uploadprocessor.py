@@ -16,6 +16,7 @@ class EventHandler(FileSystemEventHandler):
         results = t.detect_text_local(event.src_path)
        
         report={}
+        report["filename"]= fname
         report["text"]= []
         for result in results:
             report["text"].append(result.description)
@@ -29,7 +30,7 @@ class EventHandler(FileSystemEventHandler):
             report["caesarbash"].append(t.caesar_decode_bash(result.description))
         
         with open("reports/"+key+"/"+fname+".json", 'w') as f:
-            json.dump(report,f)
+            json.dump(report,f, indent=4)
 
 
 if __name__ == "__main__":
