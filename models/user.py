@@ -2,7 +2,7 @@ from flask_login import LoginManager, UserMixin, login_required, login_user, log
 
 class User(UserMixin):
 
-    def __init__(self, id):
+    def __init__(self, id, username, password):
         self.id = id
         self.name = "user" + str(id)
         self.password = self.name + "_secret"

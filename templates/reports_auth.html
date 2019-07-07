@@ -1,0 +1,15 @@
+<doctype html>
+<title>Python Flask File Upload Example</title>
+<h2>Authenticate</h2>
+<form method="post" action="/reports" enctype="multipart/form-data">
+    <dl>
+		<input type="text" placeholder="key" name="key" value="{{request.form.key }}">
+    </dl>
+    <p>
+		<input type="submit" value="Submit">
+	</p>
+</form>
+
+<p>
+	<a href="/reports">View your reports</a>
+</p>

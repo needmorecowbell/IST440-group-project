@@ -2,6 +2,8 @@ from google.cloud import vision
 import argparse
 import json
 from pprint import pprint
+import subprocess
+import io
 
 class TextDetect():
 
@@ -53,7 +55,13 @@ class TextDetect():
 
         return ciphertext
 
-    def brute_force(self, texts, key):
+    def caesar_decode_bash(self, message, maxKey=50):
+        """Caesar decode over bash script"""
+        results= subprocess.run(["tools/caesar_decode.sh",message, str(maxKey)], stdout=subprocess.PIPE)
+        results= results.stdout.decode("utf-8")
+        return results.split("\n")
+
+    def caesar_decode(self, texts, key):
         """Brute forces each string using caesar cipher
         Returns a list of decoded messages.
         """
@@ -63,7 +71,10 @@ class TextDetect():
         decoded=[]
 
         for text in texts:
-            content = text.description
+            if(isinstance(text,str)):
+                content = text
+            else:
+                content=text.description
             plaintext = ''
             for letter in content:
                 plaintext += self.decrypt(letter, key)
@@ -73,7 +84,20 @@ class TextDetect():
         results["decoded"]=decoded
         return results
 
+    def detect_text_local(self, path):
+        """Detects text in the file."""
+        from google.cloud import vision
+        client = vision.ImageAnnotatorClient()
 
+        with io.open(path, 'rb') as image_file:
+            content = image_file.read()
+
+        image = vision.types.Image(content=content)
+
+        response = client.text_detection(image=image)
+        texts = response.text_annotations
+        return texts
+  
     def detect_text_uri(self,uri):
         """Detects text in the file located in Google Cloud Storage or on the Web.
         """
@@ -117,10 +141,16 @@ def main():
     parser.add_argument("-c", "--ce", action="store_true",
                         help="encode using Caesar Cipher")
 
+    parser.add_argument("-d", "--cd", action="store_true",
+                        help="decode using Caesar Cipher (max key input expected)")
+    parser.add_argument( "--cdb", action="store_true",
+                        help="decode using bash Caesar Cipher (max key input expected)")
+
+    
     parser.add_argument("-v", "--verbose", action="store_true",
                         help="verbose mode")
 
-    parser.add_argument("path", help="uri of image to process")
+    parser.add_argument("path", help="uri of image to process or text to decode")
 
     args= parser.parse_args()
 
@@ -130,20 +160,27 @@ def main():
 
     report= {}
 
-    report["uri"]=path
+    report["target"]=path
 
     if args.brute:
         if args.verbose:
             print("Processing image at uri: "+path+"...")
 
         results= t.detect_text_uri(path)
-        report["text"]= results
+        report["text"]= []
+        for result in results:
+            report["text"].append(result.description)
 
         if args.verbose:
             print("Brute forcing image text...")
 
-        results= t.brute_force(results, 33)
-        report["brute_force"]=results
+        resultsCaesar= t.caesar_decode(results, 33)
+        report["caesar"]=resultsCaesar
+        report["caesarbash"]= []
+        report["rot13"]= []
+        for result in results:
+            print(result.description)
+            report["caesarbash"].append(t.caesar_decode_bash(result.description))
     elif args.ce:
         if args.verbose:
             print("Encoding Message using Caesar Cipher")
@@ -154,7 +191,15 @@ def main():
         for letter in message:
             plaintext += t.decrypt(letter, key)
         print(plaintext)
-
+    elif args.cdb:
+        if args.verbose:
+            print("Decoding Message using Caesar Cipher")
+        report["caesarbash"] = t.caesar_decode_bash(args.path)
+    elif args.cd:
+        if args.verbose:
+            print("Decoding Message using Caesar Cipher")
+        report["caesar"] = t.caesar_decode([args.path],33)
+              
     else:
         if args.verbose:
             print("Processing image at uri: "+path+"...")

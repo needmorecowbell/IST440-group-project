@@ -12,11 +12,12 @@
 	  {% endif %}
 	{% endwith %}
 </p>
-<form method="post" action="/" enctype="multipart/form-data">
+<form method="post" action="/upload" enctype="multipart/form-data">
     <dl>
 		<p>
 			<input type="file" name="file" multiple="true" autocomplete="off" required>
 		</p>
+		<input type="text" placeholder="key" name="key" value="{{request.form.key }}">
     </dl>
     <p>
 		<input type="submit" value="Submit">
@@ -24,5 +25,5 @@
 </form>
 
 <p>
-	<a href="/download">Download a file</a>
+	<a href="/reports">View your reports</a>
 </p>
