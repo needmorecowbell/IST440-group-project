@@ -12,7 +12,9 @@ KEYS =["0iadeeBCasdf33221"]
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-
+@app.route('/')
+def home():
+    return render_template("home.html")
 @app.route('/upload')
 def upload_form():
 	return render_template('upload.html')
