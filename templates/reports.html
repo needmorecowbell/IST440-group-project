@@ -34,15 +34,16 @@
       <br>
 
       {% for item in data %}
-          <b>Filename</b> 
+          <img src={{ url_for('render_file', key=item['key'])+'?filename='+item['filename'] }}>
+          <b>Filename</b>
           <p> {{ item["filename"] }} </p>
-          <b>Text</b> 
+          <b>Text</b>
           <p> {{ item["text"] }} </p>
-          <b>Caesar Method 1</b> 
+          <b>Caesar Method 1</b>
           <p> {{ item["caesar"] }} </p>
-          <b>Caesar Method 2</b> 
+          <b>Caesar Method 2</b>
           <p> {{ item["caesarbash"] }} </p>
-          <b>Rot13</b> 
+          <b>Rot13</b>
           <p> {{ item["rot13"] }} </p>
       {% endfor %}
 

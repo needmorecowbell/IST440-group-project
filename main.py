@@ -2,7 +2,7 @@ import os
 #import magic
 import urllib.request
 from app import app
-from flask import Flask, Response, flash, request, redirect, render_template
+from flask import Flask, Response, flash, request, redirect, render_template, send_file
 from models.user import User
 from werkzeug.utils import secure_filename
 import json
@@ -18,6 +18,13 @@ def home():
 @app.route('/upload')
 def upload_form():
 	return render_template('upload.html')
+
+@app.route("/uploads/<key>/")
+def render_file(key):
+    print("send file passed, Getting Filename")
+    filename  = request.args.get('filename', None)
+    print(app.config["UPLOAD_FOLDER"]+"/"+key+"/"+filename)
+    return send_file(app.config["UPLOAD_FOLDER"]+"/"+key+"/"+filename)
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -59,7 +66,7 @@ def get_reports():
         path_to_json = os.path.join(app.config["REPORTS_FOLDER"],key)
         json_files = [pos_json for pos_json in os.listdir(path_to_json) if pos_json.endswith('.json')]
         reports=[]
-        
+
         for f in json_files:
             with open(os.path.join(path_to_json,f)) as json_data:
                 reports.append(json.load(json_data))

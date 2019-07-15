@@ -1,9 +1,9 @@
 import sys
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-import time 
+import time
 from text_detect import TextDetect
-import json 
+import json
 
 class EventHandler(FileSystemEventHandler):
     def on_created(self, event):
@@ -14,9 +14,11 @@ class EventHandler(FileSystemEventHandler):
         print(key+"\t"+fname)
         print("Grabbing data from cloud")
         results = t.detect_text_local(event.src_path)
-       
+
         report={}
+        report["filepath"]= key+"/"+fname
         report["filename"]= fname
+        report["key"]= key
         report["text"]= []
         for result in results:
             report["text"].append(result.description)
@@ -28,7 +30,7 @@ class EventHandler(FileSystemEventHandler):
         for result in results:
             print(result.description)
             report["caesarbash"].append(t.caesar_decode_bash(result.description))
-        
+
         with open("reports/"+key+"/"+fname+".json", 'w') as f:
             json.dump(report,f, indent=4)
 
