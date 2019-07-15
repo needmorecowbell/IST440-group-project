@@ -41,16 +41,21 @@ def upload_file():
             f.save(os.path.join(app.config['UPLOAD_FOLDER'],key, filename))
             flash('File(s) successfully uploaded')
             return redirect('/reports')
+        else:
+            return render_template('/error_file_upload.html')
 
 @app.route('/reports')
 def get_report_auth():
-	return render_template('reports_auth.html')
+    return render_template('reports_auth.html')
 
 @app.route('/reports', methods=['POST'])
 def get_reports():
     if request.method == 'POST':
         # check if the post request has the file part
         key = request.form["key"]
+        if(key not in KEYS):
+            return render_template("api_auth_error.html")
+
         path_to_json = os.path.join(app.config["REPORTS_FOLDER"],key)
         json_files = [pos_json for pos_json in os.listdir(path_to_json) if pos_json.endswith('.json')]
         reports=[]
