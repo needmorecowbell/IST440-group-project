@@ -73,6 +73,9 @@ def get_reports():
         print(reports)
         return render_template('reports.html', data=reports)
 
+@app.route('/about-us')
+def get_about_us():
+    return render_template('about-us.html')
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=8000)
