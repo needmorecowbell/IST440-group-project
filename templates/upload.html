@@ -6,28 +6,37 @@
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-	  </head>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="/">IST 440</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-		  <span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNavDropdown">
-		  <ul class="navbar-nav">
-			<li class="nav-item active">
-			  <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-			</li>
-			<li class="nav-item">
-			  <a class="nav-link" href="/upload">Upload</a>
-			</li>
-			<li class="nav-item">
-			  <a class="nav-link" href="/reports">Reports</a>
-			</li>
-		  </ul>
-		</div>
-	  </nav>
+</head>
 
-<h2>Select file(s) to upload</h2>
+
+ 
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">IST 440</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/reports">Home</a>
+          </li>
+	  <li class="nav-item active">
+            <a class="nav-link" href="/">Upload
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/reports">Reports</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/about-us">About Us</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
 <p>
 	{% with messages = get_flashed_messages() %}
 	  {% if messages %}
@@ -39,18 +48,50 @@
 	  {% endif %}
 	{% endwith %}
 </p>
+
+  <header class="bg-primary py-1 mb-1">
+    <div class="container h-20">
+      <div class="row h-20 align-items-center">
+        <div class="col-lg-12">
+          <h1 class="display-4 text-white mt-5 mb-2">Upload File(s) Here:</h1>
+	  <p class="lead mb-5 text-white-50">To upload a file:<br/>
+					     1. Select file from location<br/>
+					     2. Enter given API key<br/>
+					     3. Press submit</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+
+
 <form method="post" action="/upload" enctype="multipart/form-data">
     <dl>
-		<p>
-			<input type="file" name="file" multiple="true" autocomplete="off" required>
-		</p>
-		<input type="text" placeholder="key" name="key" value="{{request.form.key }}">
+		<h5 align="center"><p>
+			Select file:  <input type="file" name="file" multiple="true" autocomplete="off" required>
+		</p></h5>
+
+		<h5 align="center"><p>
+			Enter API Key:  <input type="text" placeholder="key" name="key" value="">
+		</p></h5>
+
+		<h5 align="center"><p>
+			<input type="submit" value="Submit">
+		</p></h5>
+
+		<h5 align="center"><p>
+			<a href="/reports">View your reports</a>
+		</p></h5>
     </dl>
-    <p>
-		<input type="submit" value="Submit">
-	</p>
 </form>
 
-<p>
-	<a href="/reports">View your reports</a>
-</p>
+
+
+  <footer class="bg-primary py-5 mb-5">
+    <div class="container">
+      <p class="m-0 text-center text-white">&copy; © 2019 GitHub, Inc. Terms Privacy Security Status Help Contact GitHub Pricing API Training Blog About</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
