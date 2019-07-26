@@ -60,6 +60,12 @@ class TextDetect():
         results= subprocess.run(["tools/caesar_decode.sh",message, str(maxKey)], stdout=subprocess.PIPE)
         results= results.stdout.decode("utf-8")
         return results.split("\n")
+    
+    def rot13_encode(self, s):  
+        return codecs.encode(s,"rot-13")
+  
+    def rot13_decode(self, s): 
+        return codecs.decode(s,"rot-13")
 
     def caesar_decode(self, texts, key):
         """Brute forces each string using caesar cipher
