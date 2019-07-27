@@ -8,30 +8,51 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </head>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">IST 440</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/upload">Upload</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/reports">Reports</a>
-      </li>
-    </ul>
-  </div>
-</nav>
-  <body>
-    <div class="container">
+
+
+
+
+      <body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="/">IST 440</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/upload">Upload</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/reports">Reports</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/about-us">About Us</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+          <header class="bg-primary py-1 mb-1">
+              <div class="container h-20">
+                <div class="row h-20 align-items-center">
+                  <div class="col-lg-12">
+                    <h1 class="display-4 text-white mt-5 mb-2">Reports</h1>
+                  </div>
+                </div>
+              </div>
+            </header>
         <pre id="json-renderer"></pre>
-      <h1>Show reports</h1>
-      <br>
+
 
       {% for item in data %}
           <img src={{ url_for('render_file', key=item['key'])+'?filename='+item['filename'] }}>

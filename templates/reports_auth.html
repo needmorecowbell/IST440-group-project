@@ -19,7 +19,6 @@
 </head>
 
 <body>
-
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
@@ -48,16 +47,28 @@
     </div>
   </nav>
 
-<h2>Authenticate</h2>
-<form method="post" action="/reports" enctype="multipart/form-data">
-    <dl>
-		<input type="text" placeholder="key" name="key" value="{{request.form.key }}">
-    </dl>
-    <p>
-		<input type="submit" value="Submit">
-	</p>
-</form>
+</br>
+</br>
+</br>
+  <div class="container"> 
+    <div class="row">
 
-<p>
-	<a href="/reports">View your reports</a>
-</p>
+        <h2>Authenticate</h2>
+
+    </div>
+    <div class="row">
+        <form method="post" action="/reports" enctype="multipart/form-data">
+            <dl>
+            <input type="text" placeholder="key" name="key" value="{{request.form.key }}">
+            </dl>
+            <p>
+            <input type="submit" value="Submit">
+          </p>
+        </form>
+  
+    </div>
+
+  </div>
+
+</body>
+</html>

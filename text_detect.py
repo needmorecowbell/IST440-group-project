@@ -1,4 +1,5 @@
 from google.cloud import vision
+import codecs
 import argparse
 import json
 from pprint import pprint
@@ -113,6 +114,7 @@ class TextDetect():
 
         response = client.text_detection(image=image)
         texts = response.text_annotations
+        print(type(texts))
         return texts
 
         # for text in texts:
