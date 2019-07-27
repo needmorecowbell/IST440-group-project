@@ -3,7 +3,6 @@ import os
 import urllib.request
 from app import app
 from flask import Flask, Response, flash, request, redirect, render_template, send_file
-from models.user import User
 from werkzeug.utils import secure_filename
 import json
 

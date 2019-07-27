@@ -1,5 +1,4 @@
 from flask import Flask
-from models.user import User
 
 
 UPLOAD_FOLDER = 'uploads'

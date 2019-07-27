@@ -27,9 +27,11 @@ class EventHandler(FileSystemEventHandler):
         report["caesar"]=resultsCaesar
         report["caesarbash"]= []
         report["rot13"]= []
+        
         for result in results:
             print(result.description)
             report["caesarbash"].append(t.caesar_decode_bash(result.description))
+            report["rot13"].append(t.rot13_decode(result.description))
 
         with open("reports/"+key+"/"+fname+".json", 'w') as f:
             json.dump(report,f, indent=4)
