@@ -5,6 +5,9 @@ from watchdog.events import FileSystemEventHandler
 import time
 from text_detect import TextDetect
 import json
+from datetime import datetime
+import piexif
+from PIL import Image
 
 class EventHandler(FileSystemEventHandler):
     def on_created(self, event):
@@ -20,6 +23,8 @@ class EventHandler(FileSystemEventHandler):
         report["filepath"]= key+"/"+fname
         report["filename"]= fname
         report["key"]= key
+        report["timestamp"] = str(datetime.now())
+        report["exif-metadata"] = str(Image.open(event.src_path).info)
         report["text"]= []
         for result in results:
             report["text"].append(result.description)

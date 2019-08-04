@@ -55,17 +55,25 @@
 
 
       {% for item in data %}
-          <img src={{ url_for('render_file', key=item['key'])+'?filename='+item['filename'] }}>
-          <b>Filename</b>
-          <p> {{ item["filename"] }} </p>
-          <b>Text</b>
-          <p> {{ item["text"] }} </p>
-          <b>Caesar Method 1</b>
-          <p> {{ item["caesar"] }} </p>
-          <b>Caesar Method 2</b>
-          <p> {{ item["caesarbash"] }} </p>
-          <b>Rot13</b>
-          <p> {{ item["rot13"] }} </p>
+
+          <row>
+            <img style="max-width:50%; max-height:50%;" src={{ url_for('render_file', key=item['key'])+'?filename='+item['filename'] }}>
+          <br>
+            <b>Filename</b>
+            <p> {{ item["filename"] }} </p>
+            <b>Timestamp</b>
+            <p> {{ item["timestamp"] }} </p>
+            <b>File Metadata</b>
+            <p> {{ item["exif-metadata"] }} </p>
+            <b>Text</b>
+            <p> {{ item["text"] }} </p>
+            <b>Caesar Method 1</b>
+            <p> {{ item["caesar"] }} </p>
+            <b>Caesar Method 2</b>
+            <p> {{ item["caesarbash"] }} </p>
+            <b>Rot13</b>
+            <p> {{ item["rot13"] }} </p>
+        </row>
       {% endfor %}
 
      {% if error %}
